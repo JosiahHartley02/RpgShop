@@ -82,6 +82,8 @@ namespace HelloWorld
                         if (_shop.Sell(_player, _gem))
                         {
                             //need to voidify some of this code, lots of repeats
+                            //i actually dont know if this works tbh
+                            //i cant think today drained me
                             Console.WriteLine("Where would you like to store your newly bought gem?");
                             PrintInventory(_player);
                             Console.WriteLine("Which space would you like to store your item?");
@@ -192,6 +194,7 @@ namespace HelloWorld
         {
             player.GetInventory();
         }
+        
     }
 }
 
