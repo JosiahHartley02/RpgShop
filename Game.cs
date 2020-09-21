@@ -11,7 +11,7 @@ namespace HelloWorld
         public string name;
     }
     class Game
-    {        
+    {
         //struct items called
         private Item _arrow;
         private Item _sheild;
@@ -19,9 +19,9 @@ namespace HelloWorld
         //declare player with 100 gold
         private Player _player = new Player(100);
         //declare shop with 3 inventory slots
-        private Shop _shop = new Shop(3);
         bool _gameOver = false;
-        
+        private Shop _shop = new Shop(0, 3);
+
 
 
         //Run the game
@@ -72,23 +72,125 @@ namespace HelloWorld
             Console.WriteLine("2. Sheild");
             Console.WriteLine("3. Arrow");
             Console.WriteLine("4. Leave");
-            char input = Console.ReadKey().KeyChar;
-            while (input != '1' && input != '2' && input != '3' && input != '4')
+            char input = '9';
+            while (input != '1' && input != '2' && input != '3' && input != '4' && _gameOver == false)
             {
-                switch(input)
+                input = Console.ReadKey().KeyChar;
+                switch (input)
                 {
                     case '1':
-                        
+                        if (_shop.Sell(_player, _gem))
+                        {
+                            Console.WriteLine("Where would you like to store your newly bought gem?");
+                            PrintInventory(_player);
+                            Console.WriteLine("Which space would you like to store your item?");
+                            char storageinputchar = ' ';
+                            int storageinput = 9;
+                            while (storageinputchar != '1' && storageinputchar != '2' && storageinputchar != '3')
+                            {
+                                storageinputchar = Console.ReadKey().KeyChar;                                
+                                if (storageinputchar == '1')
+                                {
+                                    storageinput = 1;
+                                }
+                                if (storageinputchar == '2')
+                                {
+                                    storageinput = 2;
+                                }
+                                if (storageinputchar == '3')
+                                {
+                                    storageinput = 3;
+                                }
+                                else
+                                    Console.WriteLine("Error please select a valid option");
+                            }
+                            _player.Buy(_gem, storageinput);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry no can do");
+                        }
+                        break;
+
                     case '2':
+                        if (_shop.Sell(_player, _sheild))
+                        {
+                            Console.WriteLine("Where would you like to store your newly bought gem?");
+                            PrintInventory(_player);
+                            Console.WriteLine("Which space would you like to store your item?");
+                            char storageinputchar = ' ';
+                            int storageinput = 9;
+                            while (storageinputchar != '1' && storageinputchar != '2' && storageinputchar != '3')
+                            {
+                                storageinputchar = Console.ReadKey().KeyChar;
+                                if (storageinputchar == '1')
+                                {
+                                    storageinput = 1;
+                                }
+                                if (storageinputchar == '2')
+                                {
+                                    storageinput = 2;
+                                }
+                                if (storageinputchar == '3')
+                                {
+                                    storageinput = 3;
+                                }
+                                else
+                                    Console.WriteLine("Error please select a valid option");
+                            }
+                            _player.Buy(_sheild, storageinput);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry no can do");
+                        }
+                        break;
                     case '3':
+                        if (_shop.Sell(_player, _arrow))
+                        {
+                            Console.WriteLine("Where would you like to store your newly bought gem?");
+                            PrintInventory(_player);
+                            Console.WriteLine("Which space would you like to store your item?");
+                            char storageinputchar = ' ';
+                            int storageinput = 9;
+                            while (storageinputchar != '1' && storageinputchar != '2' && storageinputchar != '3')
+                            {
+                                storageinputchar = Console.ReadKey().KeyChar;
+                                if (storageinputchar == '1')
+                                {
+                                    storageinput = 1;
+                                }
+                                if (storageinputchar == '2')
+                                {
+                                    storageinput = 2;
+                                }
+                                if (storageinputchar == '3')
+                                {
+                                    storageinput = 3;
+                                }
+                                else
+                                    Console.WriteLine("Error please select a valid option");
+                            }
+                            _player.Buy(_arrow, storageinput);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry no can do");
+                        }
+                        break;
                     case '4':
+                        _gameOver = true;
+                        break;
                     default:
                         Console.WriteLine("Error please select a valid input");
                         break;
                 }
             }
         }
-       
+        public void PrintInventory(Player player)
+        {
+            player.GetInventory();
+        }
     }
 }
 
