@@ -23,8 +23,6 @@ namespace HelloWorld
         private Shop _shop = new Shop(0,3);
         Item[] shopInventory = new Item[3];
 
-
-
         //Run the game
         public void Run()
         {
