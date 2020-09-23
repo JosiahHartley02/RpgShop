@@ -17,10 +17,11 @@ namespace HelloWorld
         private Item _sheild;
         private Item _gem;
         //declare player with 100 gold
-        private Player _player = new Player(100);
+        private Player _player = new Player(100, 3);
         //declare shop with 3 inventory slots
         bool _gameOver = false;
-        private Shop _shop = new Shop(0, 3);
+        private Shop _shop = new Shop(0,3);
+        Item[] shopInventory = new Item[3];
 
 
 
@@ -41,6 +42,9 @@ namespace HelloWorld
         public void Start()
         {
             InitItems();
+            shopInventory[0] = _gem;
+            shopInventory[1] = _sheild;
+            shopInventory[2] = _arrow;
         }
 
         //Repeated until the game ends
@@ -68,12 +72,13 @@ namespace HelloWorld
         public void OpenShopMenu()
         {
             Console.WriteLine("Hello traveler, see anything you like?");
-            Console.WriteLine("1. Gem");
-            Console.WriteLine("2. Sheild");
-            Console.WriteLine("3. Arrow");
+            Console.WriteLine("1. " + _gem.name);
+            Console.WriteLine("2. " + _sheild.name);
+            Console.WriteLine("3. " + _arrow.name);
             Console.WriteLine("4. Leave");
+            Console.WriteLine("5. Open Inventory");
             char input = '9';
-            while (input != '1' && input != '2' && input != '3' && input != '4' && _gameOver == false)
+            while (input != '1' && input != '2' && input != '3' && input != '4' && _gameOver == false && input != '5')
             {
                 input = Console.ReadKey().KeyChar;
                 switch (input)
@@ -84,105 +89,50 @@ namespace HelloWorld
                             //need to voidify some of this code, lots of repeats
                             //i actually dont know if this works tbh
                             //i cant think today drained me
-                            Console.WriteLine("Where would you like to store your newly bought gem?");
                             PrintInventory(_player);
                             Console.WriteLine("Which space would you like to store your item?");
-                            char storageinputchar = ' ';
-                            int storageinput = 9;
-                            while (storageinputchar != '1' && storageinputchar != '2' && storageinputchar != '3')
-                            {
-                                storageinputchar = Console.ReadKey().KeyChar;                                
-                                if (storageinputchar == '1')
-                                {
-                                    storageinput = 1;
-                                }
-                                if (storageinputchar == '2')
-                                {
-                                    storageinput = 2;
-                                }
-                                if (storageinputchar == '3')
-                                {
-                                    storageinput = 3;
-                                }
-                                else
-                                    Console.WriteLine("Error please select a valid option");
-                            }
-                            _player.Buy(_gem, storageinput);
+                            StoreItem(_player, _gem);
                         }
                         else
                         {
-                            Console.WriteLine("Sorry no can do");
+                            Console.WriteLine("Sorry but it appears that your drip is lacking");
+                            Console.ReadKey();
                         }
                         break;
 
                     case '2':
                         if (_shop.Sell(_player, _sheild))
                         {
-                            Console.WriteLine("Where would you like to store your newly bought gem?");
                             PrintInventory(_player);
                             Console.WriteLine("Which space would you like to store your item?");
-                            char storageinputchar = ' ';
-                            int storageinput = 9;
-                            while (storageinputchar != '1' && storageinputchar != '2' && storageinputchar != '3')
-                            {
-                                storageinputchar = Console.ReadKey().KeyChar;
-                                if (storageinputchar == '1')
-                                {
-                                    storageinput = 1;
-                                }
-                                if (storageinputchar == '2')
-                                {
-                                    storageinput = 2;
-                                }
-                                if (storageinputchar == '3')
-                                {
-                                    storageinput = 3;
-                                }
-                                else
-                                    Console.WriteLine("Error please select a valid option");
-                            }
-                            _player.Buy(_sheild, storageinput);
+                            StoreItem(_player, _sheild);
                         }
                         else
                         {
-                            Console.WriteLine("Sorry no can do");
+                            Console.WriteLine("Sorry but it appears that your drip is lacking");
+                            Console.ReadKey();
                         }
                         break;
                     case '3':
                         if (_shop.Sell(_player, _arrow))
                         {
-                            Console.WriteLine("Where would you like to store your newly bought gem?");
                             PrintInventory(_player);
                             Console.WriteLine("Which space would you like to store your item?");
-                            char storageinputchar = ' ';
-                            int storageinput = 9;
-                            while (storageinputchar != '1' && storageinputchar != '2' && storageinputchar != '3')
-                            {
-                                storageinputchar = Console.ReadKey().KeyChar;
-                                if (storageinputchar == '1')
-                                {
-                                    storageinput = 1;
-                                }
-                                if (storageinputchar == '2')
-                                {
-                                    storageinput = 2;
-                                }
-                                if (storageinputchar == '3')
-                                {
-                                    storageinput = 3;
-                                }
-                                else
-                                    Console.WriteLine("Error please select a valid option");
-                            }
-                            _player.Buy(_arrow, storageinput);
+                            StoreItem(_player, _arrow);
                         }
                         else
                         {
-                            Console.WriteLine("Sorry no can do");
+                            Console.WriteLine("Sorry but it appears that your drip is lacking");
+                            Console.ReadKey();
                         }
                         break;
                     case '4':
                         _gameOver = true;
+                        break;
+                    case '5':
+                        PrintInventory(_player);
+                        Console.WriteLine("Press any key to continue");
+                        Console.ReadKey();
                         break;
                     default:
                         Console.WriteLine("Error please select a valid input");
@@ -194,7 +144,32 @@ namespace HelloWorld
         {
             player.GetInventory();
         }
+        public void StoreItem(Player player, Item itemName)
+        {
+            char storageinputchar = ' ';
+            int storageinput = 9;
+            while (storageinputchar != '1' && storageinputchar != '2' && storageinputchar != '3')
+            {
+                storageinputchar = Console.ReadKey().KeyChar;
+                if (storageinputchar == '1')
+                {
+                    storageinput = 0;
+                }
+                else if (storageinputchar == '2')
+                {
+                    storageinput = 1;
+                }
+                else if (storageinputchar == '3')
+                {
+                    storageinput = 2;
+                }
+                else
+                {
+                    Console.WriteLine("Error please select a valid option");
+                }
+            }
+            player.Buy(itemName, storageinput);
+        }
         
     }
 }
-

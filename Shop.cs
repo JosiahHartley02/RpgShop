@@ -7,16 +7,16 @@ namespace HelloWorld
     class Shop
     {
         private int _gold;
-        private int[] ShopIndex;
+        private string[] ShopIndex;
         public Shop()
         {
             _gold = 100;
-            int[] ShopIndex = new int[3];
+            string[] ShopIndex = new string[3];
         }
-        public Shop(int goldVal, int invSize)
+        public Shop(int goldVal, int inventorySize)
         {
             _gold = goldVal;
-            int[] ShopIndex = new int[invSize];
+            Item[] ShopIndex = new Item[inventorySize];
         }
         public bool Sell(Player player, Item item)
         {
